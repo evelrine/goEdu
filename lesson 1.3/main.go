@@ -8,13 +8,16 @@ import (
 func sortNumbers(input []int) (output []int) {
 	var sortNumbers []int = input
 	sort.Slice(sortNumbers, func(i, j int) bool {
-		return sortNumbers[i] > sortNumbers[j] // от большего к меньшему
+		return sortNumbers[i] > sortNumbers[j]
 	})
-	output = sortNumbers // присваиваем результат в output
-	fmt.Println(output)
+	output = sortNumbers
+	fmt.Println("Отсортированные элементы:", output)
+	fmt.Println("Самое большое число:", output[0])
+	fmt.Println("Самое маленькое число:", output[4])
+	fmt.Println("Среднее-арифметическое:", (output[0]+output[1]+output[2]+output[3]+output[4])/5)
 	return
 }
 
 func main() {
-	sortNumbers([]int{5, 2, 4, 3, 1}) // передаём срез чисел
+	sortNumbers([]int{500, 2, 40, 39, -1})
 }
