@@ -1,0 +1,27 @@
+{{template "layout_start" .}}
+<header class="page-header">
+  <div>
+    <p class="eyebrow">CRM автосервиса</p>
+    <h1>Панель управления</h1>
+  </div>
+</header>
+<section class="stats">
+  <div class="stat"><span>Клиенты</span><strong>{{index .Data "clients"}}</strong></div>
+  <div class="stat"><span>Автомобили</span><strong>{{index .Data "cars"}}</strong></div>
+  <div class="stat"><span>Заказы</span><strong>{{index .Data "orders"}}</strong></div>
+  <div class="stat"><span>Выручка завершенных</span><strong>{{printf "%.2f" (index .Data "revenue")}} ₽</strong></div>
+</section>
+<section class="card">
+  <h2>Последние заказ-наряды</h2>
+  <table>
+    <thead><tr><th>№</th><th>Клиент</th><th>Авто</th><th>Статус</th><th>Сумма</th></tr></thead>
+    <tbody>
+    {{range index .Data "latest"}}
+      <tr><td><a href="/orders/{{.ID}}">#{{.ID}}</a></td><td>{{.ClientName}}</td><td>{{.CarTitle}}</td><td><span class="pill">{{statusLabel .Status}}</span></td><td>{{printf "%.2f" .TotalPrice}} ₽</td></tr>
+    {{else}}
+      <tr><td colspan="5" class="muted">Пока заказов нет</td></tr>
+    {{end}}
+    </tbody>
+  </table>
+</section>
+{{template "layout_end" .}}

@@ -1,0 +1,6 @@
+# Локальный HTTPS: https://localhost
+# Для реального домена замените localhost на ваш домен, например crm.example.com
+localhost {
+    tls internal
+    reverse_proxy app:8080
+}

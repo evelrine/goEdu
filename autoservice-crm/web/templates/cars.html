@@ -1,0 +1,28 @@
+{{template "layout_start" .}}
+<header class="page-header"><div><p class="eyebrow">Автопарк клиентов</p><h1>Автомобили</h1></div></header>
+<section class="grid-two">
+  <div class="card">
+    <h2>Добавить автомобиль</h2>
+    <form method="post" class="form">
+      <select name="client_id" required>
+        <option value="">Выберите клиента</option>
+        {{range index .Data "clients"}}<option value="{{.ID}}">{{.FullName}}</option>{{end}}
+      </select>
+      <input name="brand" placeholder="Марка" required>
+      <input name="model" placeholder="Модель" required>
+      <input name="year" type="number" placeholder="Год">
+      <input name="vin" placeholder="VIN">
+      <input name="license_plate" placeholder="Госномер">
+      <input name="mileage" type="number" placeholder="Пробег">
+      <button>Сохранить</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>Список автомобилей</h2>
+    <table>
+      <thead><tr><th>Клиент</th><th>Авто</th><th>Госномер</th><th>Пробег</th></tr></thead>
+      <tbody>{{range index .Data "cars"}}<tr><td>{{.ClientName}}</td><td>{{.Brand}} {{.Model}} {{.Year}}</td><td>{{.LicensePlate}}</td><td>{{.Mileage}}</td></tr>{{else}}<tr><td colspan="4" class="muted">Автомобилей пока нет</td></tr>{{end}}</tbody>
+    </table>
+  </div>
+</section>
+{{template "layout_end" .}}

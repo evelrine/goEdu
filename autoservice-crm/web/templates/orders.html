@@ -1,0 +1,37 @@
+{{template "layout_start" .}}
+<header class="page-header"><div><p class="eyebrow">Документы сервиса</p><h1>Заказ-наряды</h1></div></header>
+<section class="grid-two">
+  <div class="card">
+    <h2>Создать заказ-наряд</h2>
+    {{if .Error}}<div class="alert alert-error">{{.Error}}</div>{{end}}
+    <form method="post" class="form" id="order-form">
+      <select name="client_id" id="order-client" required>
+        <option value="">Выберите клиента</option>
+        {{range index .Data "clients"}}<option value="{{.ID}}">{{.FullName}}</option>{{end}}
+      </select>
+      <select name="car_id" id="order-car" required>
+        <option value="">Сначала выберите клиента</option>
+        {{range index .Data "cars"}}
+          <option value="{{.ID}}" data-client-id="{{.ClientID}}">{{.Brand}} {{.Model}} — {{.LicensePlate}}</option>
+        {{end}}
+      </select>
+      <p class="form-hint">В списке автомобилей показываются только машины выбранного клиента.</p>
+      <select name="status"><option value="new">Новый</option><option value="in_progress">В работе</option><option value="waiting_parts">Ожидает запчасти</option><option value="done">Завершен</option><option value="cancelled">Отменен</option></select>
+      <textarea name="problem_description" placeholder="Описание проблемы" required></textarea>
+      <textarea name="manager_comment" placeholder="Комментарий мастера"></textarea>
+      <input name="service_title" placeholder="Работа, например: Диагностика тормозной системы">
+      <input name="service_price" type="number" step="0.01" placeholder="Цена работы, ₽">
+      <input name="part_title" placeholder="Запчасть, например: Тормозные колодки">
+      <input name="part_price" type="number" step="0.01" placeholder="Цена запчасти, ₽">
+      <button>Создать</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>Список заказов</h2>
+    <table>
+      <thead><tr><th>№</th><th>Клиент</th><th>Авто</th><th>Статус</th><th>Сумма</th></tr></thead>
+      <tbody>{{range index .Data "orders"}}<tr><td><a href="/orders/{{.ID}}">#{{.ID}}</a></td><td>{{.ClientName}}</td><td>{{.CarTitle}}</td><td><span class="pill">{{statusLabel .Status}}</span></td><td>{{printf "%.2f" .TotalPrice}} ₽</td></tr>{{else}}<tr><td colspan="5" class="muted">Заказов пока нет</td></tr>{{end}}</tbody>
+    </table>
+  </div>
+</section>
+{{template "layout_end" .}}

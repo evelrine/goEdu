@@ -1,0 +1,49 @@
+services:
+  app:
+    build: .
+    container_name: autoservice_app
+    env_file:
+      - .env
+    environment:
+      # Явно указываем шрифт для PDF с кириллицей внутри Alpine-контейнера.
+      PDF_FONT_PATH: /usr/share/fonts/dejavu/DejaVuSans.ttf
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./web:/app/web:ro
+    restart: unless-stopped
+
+  db:
+    image: postgres:17-alpine
+    container_name: autoservice_db
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: autoservice_caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  caddy_data:
+  caddy_config:

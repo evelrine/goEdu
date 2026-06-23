@@ -1,0 +1,13 @@
+{{template "layout_start" .}}
+<section class="auth-card">
+  <h1>Вход</h1>
+  <p>Войдите в CRM автосервиса</p>
+  {{if .Error}}<div class="alert">{{.Error}}</div>{{end}}
+  <form method="post" class="form">
+    <input name="email" type="email" placeholder="Email" required>
+    <input name="password" type="password" placeholder="Пароль" required>
+    <button>Войти</button>
+  </form>
+  <p class="muted">Нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+</section>
+{{template "layout_end" .}}

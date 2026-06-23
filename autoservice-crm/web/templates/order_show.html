@@ -1,0 +1,29 @@
+{{template "layout_start" .}}
+{{$o := index .Data "order"}}
+<header class="page-header"><div><p class="eyebrow">Заказ-наряд</p><h1>Заказ №{{$o.ID}}</h1></div><a class="button-link" href="/orders/{{$o.ID}}/pdf">Скачать PDF</a></header>
+<section class="card detail">
+  <div class="detail-row"><span>Клиент</span><strong>{{$o.ClientName}}</strong></div>
+  <div class="detail-row"><span>Автомобиль</span><strong>{{$o.CarTitle}}</strong></div>
+  <div class="detail-row"><span>Статус</span><strong><span class="pill">{{statusLabel $o.Status}}</span></strong></div>
+  <div class="detail-row"><span>Описание</span><strong>{{$o.ProblemDescription}}</strong></div>
+  <div class="detail-row"><span>Комментарий</span><strong>{{$o.ManagerComment}}</strong></div>
+</section>
+<section class="card status-card">
+  <h2>Изменить статус</h2>
+  <form method="post" action="/orders/{{$o.ID}}/status" class="status-form">
+    <select name="status" required>
+      <option value="new" {{if eq $o.Status "new"}}selected{{end}}>Новый</option>
+      <option value="in_progress" {{if eq $o.Status "in_progress"}}selected{{end}}>В работе</option>
+      <option value="waiting_parts" {{if eq $o.Status "waiting_parts"}}selected{{end}}>Ожидает запчасти</option>
+      <option value="done" {{if eq $o.Status "done"}}selected{{end}}>Завершен</option>
+      <option value="cancelled" {{if eq $o.Status "cancelled"}}selected{{end}}>Отменен</option>
+    </select>
+    <button type="submit">Сохранить статус</button>
+  </form>
+</section>
+<section class="card">
+  <h2>Позиции</h2>
+  <table><thead><tr><th>Тип</th><th>Название</th><th>Кол-во</th><th>Цена</th><th>Итого</th></tr></thead><tbody>{{range index .Data "items"}}<tr><td>{{.Type}}</td><td>{{.Title}}</td><td>{{printf "%.2f" .Quantity}}</td><td>{{printf "%.2f" .Price}} ₽</td><td>{{printf "%.2f" .Total}} ₽</td></tr>{{end}}</tbody></table>
+  <h2 class="total">Итого: {{printf "%.2f" $o.TotalPrice}} ₽</h2>
+</section>
+{{template "layout_end" .}}

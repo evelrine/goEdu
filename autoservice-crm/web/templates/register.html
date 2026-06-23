@@ -1,0 +1,14 @@
+{{template "layout_start" .}}
+<section class="auth-card">
+  <h1>Регистрация</h1>
+  <p>Создайте первого пользователя системы</p>
+  {{if .Error}}<div class="alert">{{.Error}}</div>{{end}}
+  <form method="post" class="form">
+    <input name="name" placeholder="Имя" required>
+    <input name="email" type="email" placeholder="Email" required>
+    <input name="password" type="password" placeholder="Пароль минимум 6 символов" required>
+    <button>Создать аккаунт</button>
+  </form>
+  <p class="muted">Уже есть аккаунт? <a href="/login">Войти</a></p>
+</section>
+{{template "layout_end" .}}

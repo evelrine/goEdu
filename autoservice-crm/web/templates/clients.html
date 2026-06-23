@@ -1,0 +1,22 @@
+{{template "layout_start" .}}
+<header class="page-header"><div><p class="eyebrow">База клиентов</p><h1>Клиенты</h1></div></header>
+<section class="grid-two">
+  <div class="card">
+    <h2>Добавить клиента</h2>
+    <form method="post" class="form">
+      <input name="full_name" placeholder="ФИО клиента" required>
+      <input name="phone" placeholder="Телефон" required>
+      <input name="email" type="email" placeholder="Email">
+      <textarea name="notes" placeholder="Заметки"></textarea>
+      <button>Сохранить</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>Список клиентов</h2>
+    <table>
+      <thead><tr><th>Имя</th><th>Телефон</th><th>Email</th></tr></thead>
+      <tbody>{{range .Data}}<tr><td>{{.FullName}}</td><td>{{.Phone}}</td><td>{{.Email}}</td></tr>{{else}}<tr><td colspan="3" class="muted">Клиентов пока нет</td></tr>{{end}}</tbody>
+    </table>
+  </div>
+</section>
+{{template "layout_end" .}}
