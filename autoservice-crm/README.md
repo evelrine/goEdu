@@ -29,8 +29,13 @@ https://localhost
 ## Структура
 
 cmd/server/main.go       — backend
+
 web/templates/           — HTML-шаблоны
+
 web/static/css/app.css   — Apple-style CSS
+
 migrations/001_init.sql  — структура БД
+
 Dockerfile               — сборка Go-приложения
+
 docker-compose.yml       — app + postgres + caddy
