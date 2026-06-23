@@ -32,7 +32,7 @@ cmd/server/main.go       — backend
 
 web/templates/           — HTML-шаблоны
 
-web/static/css/app.css   — Apple-style CSS
+web/static/css/app.css   — style CSS
 
 migrations/001_init.sql  — структура БД
 
