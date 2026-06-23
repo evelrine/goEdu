@@ -5,6 +5,7 @@ MVP CRM-система для автосервиса: Go + PostgreSQL + HTML/CSS
 ## Быстрый запуск
 
 cp .env.example .env
+
 docker compose up --build
 
 Открыть:
